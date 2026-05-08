@@ -13,16 +13,18 @@ import {
   Flame,
   Leaf,
   AlertCircle,
-  RefreshCw
+  RefreshCw,
+  ShoppingBag
 } from "lucide-react";
 import Image from "next/image";
 import ProductModal, { Product } from "@/components/home/ProductModal";
+import { useCartStore } from "@/store/useCartStore";
 
 const CATEGORIES = [
   { id: "all", name: "ทั้งหมด", icon: Utensils },
-  { id: "mala", name: "หม่าล่า & มาม่าเกาหลี", icon: Flame },
-  { id: "main", name: "อาหารจานเดียว", icon: ChefHat },
-  { id: "healthy", name: "สุขภาพ & ของหวาน", icon: Leaf },
+  { id: "mala", name: "หม่าล่า", icon: Flame },
+  { id: "main", name: "จานเดียว", icon: ChefHat },
+  { id: "healthy", name: "สุขภาพ", icon: Leaf },
 ];
 
 export default function MenuPage() {
@@ -31,11 +33,11 @@ export default function MenuPage() {
   const [error, setError] = useState<string | null>(null);
   const [activeCategory, setActiveCategory] = useState("all");
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const totalItems = useCartStore((state) => state.getTotalItems());
 
   const fetchProducts = useCallback(async () => {
     setLoading(true);
     setError(null);
-
     const timeoutId = setTimeout(() => {
       if (loading) {
         setLoading(false);
@@ -45,9 +47,7 @@ export default function MenuPage() {
 
     try {
       const { data, error: sbError } = await supabase.from('products').select('*');
-
       if (sbError) throw sbError;
-
       if (data) {
         const mappedData = data.map(item => ({
           ...item,
@@ -73,27 +73,28 @@ export default function MenuPage() {
     : products.filter(p => p.category === activeCategory);
 
   return (
-    <main className="min-h-screen bg-[#fcf9f5]">
+    <main className="min-h-screen bg-[#f8f9fa] pb-32">
       <Navbar />
       
-      <div className="pt-32 pb-16 px-4 bg-white border-b border-mala-100">
-        <div className="max-w-7xl mx-auto text-center">
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-mala-50 text-mala-600 text-xs font-black uppercase tracking-widest mb-6"
+      {/* Header - Minimal & Elegant */}
+      <div className="pt-32 pb-12 px-6 bg-white border-b border-slate-100">
+        <div className="max-w-7xl mx-auto">
+            <motion.span 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="text-[10px] font-black text-mala-600 uppercase tracking-[0.3em] mb-3 block"
             >
-                <ChefHat className="w-4 h-4" />
-                Gem's Kitchen Selection
-            </motion.div>
-            <h1 className="text-4xl md:text-6xl font-serif font-bold text-deep-charcoal mb-6">เมนูทั้งหมดของเรา</h1>
-            <p className="text-gray-500 text-lg max-w-2xl mx-auto font-light">สัมผัสรสชาติที่รังสรรค์อย่างพิถีพิถัน แบ่งตามความชอบของคุณ</p>
+                Authentic Flavors
+            </motion.span>
+            <h1 className="text-4xl md:text-6xl font-serif font-bold text-deep-charcoal mb-4">Our Menu</h1>
+            <p className="text-gray-400 text-sm md:text-lg max-w-xl font-light">รังสรรค์อย่างพิถีพิถันจากวัตถุดิบคุณภาพสู่จานโปรดของคุณ</p>
         </div>
       </div>
 
-      <div className="sticky top-20 z-30 bg-white/80 backdrop-blur-xl border-b border-mala-100 px-4">
-        <div className="max-w-7xl mx-auto">
-            <div className="flex items-center justify-start md:justify-center gap-2 md:gap-8 overflow-x-auto py-4 no-scrollbar">
+      {/* Categories Scroller - Native App Style */}
+      <div className="sticky top-20 z-30 bg-white/80 backdrop-blur-xl border-b border-slate-100">
+        <div className="max-w-7xl mx-auto px-6">
+            <div className="flex items-center gap-3 overflow-x-auto py-5 no-scrollbar">
                 {CATEGORIES.map((cat) => {
                     const Icon = cat.icon;
                     const isActive = activeCategory === cat.id;
@@ -101,11 +102,13 @@ export default function MenuPage() {
                         <button
                             key={cat.id}
                             onClick={() => setActiveCategory(cat.id)}
-                            className={`flex items-center gap-2 px-6 py-3 rounded-full text-sm font-black transition-all whitespace-nowrap active:scale-95 ${
-                                isActive ? "bg-mala-600 text-white shadow-lg" : "text-gray-400 hover:text-mala-600"
+                            className={`flex items-center gap-2 px-6 py-3 rounded-2xl text-[13px] font-bold transition-all whitespace-nowrap active:scale-95 ${
+                                isActive 
+                                  ? "bg-deep-charcoal text-white shadow-xl shadow-slate-900/10" 
+                                  : "bg-white text-slate-500 border border-slate-200 hover:border-mala-200 hover:text-mala-600"
                             }`}
                         >
-                            <Icon className="w-4 h-4" />
+                            <Icon className={`w-4 h-4 ${isActive ? "text-mala-400" : ""}`} />
                             {cat.name}
                         </button>
                     );
@@ -114,42 +117,53 @@ export default function MenuPage() {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 py-16">
+      {/* Menu Grid - Professional iPhone Feel */}
+      <div className="max-w-7xl mx-auto px-6 py-12">
         {loading ? (
             <div className="py-32 flex flex-col items-center justify-center gap-4 text-center">
                 <Loader2 className="w-12 h-12 text-mala-600 animate-spin" />
-                <p className="text-gray-400 font-bold uppercase tracking-widest text-xs">Preparing your menu...</p>
+                <p className="text-slate-300 font-bold uppercase tracking-widest text-[10px]">Refreshing Flavors...</p>
             </div>
         ) : error ? (
             <div className="py-32 flex flex-col items-center justify-center gap-4 text-center">
                 <AlertCircle className="w-12 h-12 text-red-400" />
                 <p className="text-gray-500 font-medium">{error}</p>
-                <button onClick={fetchProducts} className="mt-4 flex items-center gap-2 px-8 py-3 bg-mala-600 text-white rounded-full font-bold active:scale-95 shadow-lg">
-                    <RefreshCw className="w-4 h-4" /> ลองอีกครั้ง
+                <button onClick={fetchProducts} className="mt-4 px-8 py-3 bg-mala-600 text-white rounded-full font-bold active:scale-95 shadow-lg">
+                    ลองใหม่อีกครั้ง
                 </button>
             </div>
         ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <AnimatePresence mode="wait">
-                  {filteredProducts.map((item) => (
+                  {filteredProducts.map((item, index) => (
                       <motion.div
                           key={item.id}
-                          initial={{ opacity: 0, y: 20 }}
+                          initial={{ opacity: 0, y: 15 }}
                           whileInView={{ opacity: 1, y: 0 }}
                           viewport={{ once: true, amount: 0.1 }}
-                          className="group bg-white rounded-[2.5rem] overflow-hidden shadow-sm hover:shadow-xl border border-mala-50 transition-all cursor-pointer active:scale-[0.98]"
+                          transition={{ delay: index * 0.05 }}
+                          className="group bg-white rounded-[2rem] overflow-hidden shadow-sm hover:shadow-xl border border-slate-100 transition-all cursor-pointer active:scale-[0.98]"
                           onClick={() => setSelectedProduct(item)}
                       >
-                          <div className="relative aspect-[4/3] overflow-hidden">
-                              <Image src={item.image} alt={item.name} fill className="object-cover" unoptimized />
-                              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                          </div>
-                          <div className="p-8">
-                              <div className="flex justify-between items-start mb-4">
-                                  <h3 className="text-xl font-serif font-bold text-deep-charcoal">{item.name}</h3>
-                                  <span className="text-xl font-black text-mala-600">฿{item.price}</span>
+                          <div className="relative aspect-[16/11] overflow-hidden">
+                              <Image src={item.image} alt={item.name} fill className="object-cover transition-transform duration-700 group-hover:scale-105" unoptimized />
+                              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                              <div className="absolute top-4 right-4 w-10 h-10 bg-white/90 backdrop-blur-md rounded-full flex items-center justify-center text-mala-600 shadow-lg scale-0 group-hover:scale-100 transition-transform">
+                                <Plus className="w-5 h-5" />
                               </div>
-                              <p className="text-gray-500 text-sm font-light line-clamp-2">{item.description}</p>
+                          </div>
+                          <div className="p-7">
+                              <div className="flex justify-between items-start mb-3">
+                                  <h3 className="text-lg font-bold text-deep-charcoal leading-tight">{item.name}</h3>
+                                  <span className="text-lg font-black text-mala-600">฿{item.price}</span>
+                              </div>
+                              <p className="text-slate-400 text-xs font-light line-clamp-2 leading-relaxed">{item.description}</p>
+                              <div className="mt-6 pt-5 border-t border-slate-50 flex items-center justify-between">
+                                <span className="text-[10px] font-black text-slate-300 uppercase tracking-widest">{item.category}</span>
+                                <button className="text-xs font-bold text-mala-600 flex items-center gap-1 group-hover:gap-2 transition-all">
+                                  สั่งเลย <ChevronRight className="w-4 h-4" />
+                                </button>
+                              </div>
                           </div>
                       </motion.div>
                   ))}
@@ -157,6 +171,37 @@ export default function MenuPage() {
             </div>
         )}
       </div>
+
+      {/* Professional Floating Cart Button */}
+      <AnimatePresence>
+        {totalItems > 0 && (
+          <motion.div 
+            initial={{ y: 100, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 100, opacity: 0 }}
+            className="fixed bottom-28 left-6 right-6 z-[90] md:hidden"
+          >
+            <Link 
+              href="/menu" // Should lead to checkout/cart modal or page
+              className="bg-mala-600 text-white p-5 rounded-[2rem] shadow-2xl flex items-center justify-between shadow-mala-600/30 active:scale-[0.98] transition-transform"
+            >
+              <div className="flex items-center gap-4">
+                <div className="relative">
+                  <ShoppingBag className="w-6 h-6" />
+                  <span className="absolute -top-2 -right-2 w-5 h-5 bg-white text-mala-600 text-[10px] font-black rounded-full flex items-center justify-center shadow-md">
+                    {totalItems}
+                  </span>
+                </div>
+                <div>
+                  <p className="text-[10px] font-black text-white/60 uppercase tracking-widest">Your Order</p>
+                  <p className="text-sm font-bold">ดูตะกร้าสินค้า</p>
+                </div>
+              </div>
+              <ChevronRight className="w-6 h-6" />
+            </Link>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <ProductModal product={selectedProduct} isOpen={!!selectedProduct} onClose={() => setSelectedProduct(null)} />
     </main>
