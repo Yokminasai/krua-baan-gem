@@ -117,8 +117,8 @@ export default function PosDashboard() {
       fetchData();
       const channel = supabase
         .channel("pos_realtime")
-        .on("postgres_changes", { event: "*", table: "orders" }, () => fetchData())
-        .on("postgres_changes", { event: "*", table: "products" }, () => fetchData())
+        .on("postgres_changes", { event: "*", schema: "public", table: "orders" }, () => fetchData())
+        .on("postgres_changes", { event: "*", schema: "public", table: "products" }, () => fetchData())
         .subscribe();
       return () => { supabase.removeChannel(channel); };
     }
