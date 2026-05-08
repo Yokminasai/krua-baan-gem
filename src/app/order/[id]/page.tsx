@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, use } from "react";
 import { supabase } from "@/lib/supabase";
 import { 
   CheckCircle2, 
@@ -27,7 +27,9 @@ interface Order {
   slip_url?: string;
 }
 
-export default function OrderTrackerPage({ params }: { params: { id: string } }) {
+export default function OrderTrackerPage({ params }: { params: Promise<{ id: string }> }) {
+  const resolvedParams = use(params);
+  const orderId = resolvedParams.id;
   const [order, setOrder] = useState<Order | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -36,12 +38,12 @@ export default function OrderTrackerPage({ params }: { params: { id: string } })
 
     // Subscribe to real-time updates for this specific order
     const channel = supabase
-      .channel(`order:${params.id}`)
+      .channel(`order:${orderId}`)
       .on('postgres_changes', { 
         event: 'UPDATE', 
         schema: 'public', 
         table: 'orders',
-        filter: `id=eq.${params.id}`
+        filter: `id=eq.${orderId}`
       }, (payload) => {
         console.log('Order update:', payload.new);
         setOrder(payload.new as Order);
@@ -51,13 +53,13 @@ export default function OrderTrackerPage({ params }: { params: { id: string } })
     return () => {
       supabase.removeChannel(channel);
     };
-  }, [params.id]);
+  }, [orderId]);
 
   const fetchOrder = async () => {
     const { data, error } = await supabase
       .from('orders')
       .select('*')
-      .eq('id', params.id)
+      .eq('id', orderId)
       .single();
 
     if (error) console.error("Error fetching order:", error);
