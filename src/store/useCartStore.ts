@@ -9,6 +9,7 @@ export interface CartItem {
   options?: string;
   optionDetails?: any[]; // Store detailed options for order processing
   image?: string;
+  description?: string;
 }
 
 interface CartStore {
