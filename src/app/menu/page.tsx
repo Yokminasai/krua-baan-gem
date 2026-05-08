@@ -16,6 +16,7 @@ import {
   RefreshCw,
   ShoppingBag
 } from "lucide-react";
+import Link from "next/link";
 import Image from "next/image";
 import ProductModal, { Product } from "@/components/home/ProductModal";
 import { useCartStore } from "@/store/useCartStore";
