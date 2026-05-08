@@ -1,0 +1,21 @@
+{
+  "name": "Krua Baan Gem Merchant",
+  "short_name": "KBG Merchant",
+  "description": "Dashboard สำหรับจัดการออเดอร์ ร้านครัวบ้านเจ็ม",
+  "start_url": "/pos",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#b91c1c",
+  "icons": [
+    {
+      "src": "/logo.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg"
+    },
+    {
+      "src": "/logo.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg"
+    }
+  ]
+}
