@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://kruabaangem.com' // เปลี่ยนเป็น URL จริงของคุณเมื่อจดโดเมนแล้ว
+  const baseUrl = 'https://krua-baan-gem.vercel.app' 
 
   return [
     {
