@@ -21,6 +21,7 @@ const navLinks = [
   { name: "หน้าแรก", href: "/", icon: Home },
   { name: "เมนูอาหาร", href: "/menu", icon: UtensilsCrossed },
   { name: "เรื่องราวของเรา", href: "/story", icon: BookOpen },
+  { name: "แจ้งปัญหา / ติดต่อเรา", href: "/support", icon: ChefHat },
 ];
 
 export default function Navbar() {

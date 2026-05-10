@@ -94,24 +94,26 @@ export default function ContactSupportModal() {
               initial={{ y: 50, opacity: 0, scale: 0.95 }}
               animate={{ y: 0, opacity: 1, scale: 1 }}
               exit={{ y: 20, opacity: 0, scale: 0.95 }}
-              className="relative w-full max-w-lg bg-white rounded-[2rem] shadow-2xl overflow-hidden flex flex-col max-h-[90vh]"
+              className="relative w-full max-w-lg bg-white rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.3)] overflow-hidden flex flex-col max-h-[90vh]"
             >
               {/* Header */}
-              <div className="bg-red-600 p-6 text-white flex justify-between items-center">
-                <div>
-                  <h2 className="text-2xl font-bold font-serif">ติดต่อ / ร้องเรียน</h2>
-                  <p className="text-red-100 text-sm mt-1">ครัวบ้านเจ็มยินดีรับฟังทุกความคิดเห็นครับ</p>
+              <div className="bg-gradient-to-r from-red-600 to-red-700 p-8 pt-10 text-white relative">
+                <div className="relative z-10">
+                  <h2 className="text-3xl font-bold font-serif tracking-tight">ติดต่อ / ร้องเรียน</h2>
+                  <p className="text-red-100 text-sm mt-2 font-light opacity-90">ครัวบ้านเจ็มยินดีรับฟังทุกความคิดเห็น เพื่อพัฒนาบริการให้ดียิ่งขึ้นครับ</p>
                 </div>
                 <button 
                   onClick={() => setIsOpen(false)}
-                  className="p-2 bg-white/20 hover:bg-white/30 rounded-full transition-colors"
+                  className="absolute top-6 right-6 p-2.5 bg-white/10 hover:bg-white/20 rounded-full transition-all active:scale-90"
                 >
-                  <X className="w-5 h-5" />
+                  <X className="w-6 h-6" />
                 </button>
+                {/* Decorative circle */}
+                <div className="absolute -top-10 -right-10 w-40 h-40 bg-white/5 rounded-full blur-2xl" />
               </div>
 
               {/* Body */}
-              <div className="p-6 md:p-8 overflow-y-auto custom-scrollbar">
+              <div className="p-8 md:p-10 overflow-y-auto custom-scrollbar">
                 {status === "success" ? (
                   <motion.div 
                     initial={{ opacity: 0, scale: 0.8 }}
@@ -134,7 +136,7 @@ export default function ContactSupportModal() {
                     )}
 
                     <div className="space-y-2">
-                      <label className="text-sm font-bold text-slate-700 ml-1">ชื่อ - นามสกุล <span className="text-red-500">*</span></label>
+                      <label className="text-sm font-bold text-slate-600 ml-1">ชื่อ - นามสกุล <span className="text-red-500">*</span></label>
                       <input 
                         required
                         type="text" 
@@ -142,12 +144,12 @@ export default function ContactSupportModal() {
                         value={formData.name}
                         onChange={handleChange}
                         placeholder="กรุณากรอกชื่อของคุณ"
-                        className="w-full bg-slate-50 border-2 border-transparent rounded-2xl p-4 focus:border-red-500 focus:bg-white outline-none transition-all"
+                        className="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl p-4.5 focus:border-red-500 focus:bg-white outline-none transition-all shadow-sm placeholder:text-slate-400"
                       />
                     </div>
 
                     <div className="space-y-2">
-                      <label className="text-sm font-bold text-slate-700 ml-1">เบอร์โทรศัพท์ / อีเมล <span className="text-red-500">*</span></label>
+                      <label className="text-sm font-bold text-slate-600 ml-1">เบอร์โทรศัพท์ / อีเมล <span className="text-red-500">*</span></label>
                       <input 
                         required
                         type="text" 
@@ -155,41 +157,46 @@ export default function ContactSupportModal() {
                         value={formData.contactInfo}
                         onChange={handleChange}
                         placeholder="เพื่อการติดต่อกลับ"
-                        className="w-full bg-slate-50 border-2 border-transparent rounded-2xl p-4 focus:border-red-500 focus:bg-white outline-none transition-all"
+                        className="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl p-4.5 focus:border-red-500 focus:bg-white outline-none transition-all shadow-sm placeholder:text-slate-400"
                       />
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div className="space-y-2">
-                        <label className="text-sm font-bold text-slate-700 ml-1">หมายเลขคำสั่งซื้อ <span className="text-slate-400 font-normal">(ถ้ามี)</span></label>
+                        <label className="text-sm font-bold text-slate-600 ml-1">หมายเลขคำสั่งซื้อ <span className="text-slate-400 font-normal">(ถ้ามี)</span></label>
                         <input 
                           type="text" 
                           name="orderId"
                           value={formData.orderId}
                           onChange={handleChange}
                           placeholder="เช่น 12345"
-                          className="w-full bg-slate-50 border-2 border-transparent rounded-2xl p-4 focus:border-red-500 focus:bg-white outline-none transition-all"
+                          className="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl p-4.5 focus:border-red-500 focus:bg-white outline-none transition-all shadow-sm placeholder:text-slate-400"
                         />
                       </div>
 
                       <div className="space-y-2">
-                        <label className="text-sm font-bold text-slate-700 ml-1">หัวข้อการติดต่อ <span className="text-red-500">*</span></label>
-                        <select 
-                          name="type"
-                          value={formData.type}
-                          onChange={handleChange}
-                          className="w-full bg-slate-50 border-2 border-transparent rounded-2xl p-4 focus:border-red-500 focus:bg-white outline-none transition-all appearance-none cursor-pointer"
-                        >
-                          <option value="food">ปัญหาเกี่ยวกับอาหาร</option>
-                          <option value="service">ปัญหาการบริการ</option>
-                          <option value="suggestion">ข้อเสนอแนะ</option>
-                          <option value="other">อื่นๆ</option>
-                        </select>
+                        <label className="text-sm font-bold text-slate-600 ml-1">หัวข้อการติดต่อ <span className="text-red-500">*</span></label>
+                        <div className="relative">
+                          <select 
+                            name="type"
+                            value={formData.type}
+                            onChange={handleChange}
+                            className="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl p-4.5 focus:border-red-500 focus:bg-white outline-none transition-all appearance-none cursor-pointer shadow-sm"
+                          >
+                            <option value="food">ปัญหาเกี่ยวกับอาหาร</option>
+                            <option value="service">ปัญหาการบริการ</option>
+                            <option value="suggestion">ข้อเสนอแนะ</option>
+                            <option value="other">อื่นๆ</option>
+                          </select>
+                          <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
+                          </div>
+                        </div>
                       </div>
                     </div>
 
                     <div className="space-y-2">
-                      <label className="text-sm font-bold text-slate-700 ml-1">รายละเอียด <span className="text-red-500">*</span></label>
+                      <label className="text-sm font-bold text-slate-600 ml-1">รายละเอียด <span className="text-red-500">*</span></label>
                       <textarea 
                         required
                         name="message"
@@ -197,14 +204,14 @@ export default function ContactSupportModal() {
                         onChange={handleChange}
                         rows={4}
                         placeholder="อธิบายรายละเอียดปัญหาหรือข้อเสนอแนะ..."
-                        className="w-full bg-slate-50 border-2 border-transparent rounded-2xl p-4 focus:border-red-500 focus:bg-white outline-none transition-all resize-none"
+                        className="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl p-4.5 focus:border-red-500 focus:bg-white outline-none transition-all resize-none shadow-sm placeholder:text-slate-400"
                       />
                     </div>
 
                     <button
                       type="submit"
                       disabled={status === "loading"}
-                      className="w-full bg-red-600 text-white py-4 rounded-2xl font-bold text-lg flex items-center justify-center gap-2 hover:bg-red-700 transition-all shadow-lg shadow-red-600/30 active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed mt-4"
+                      className="w-full bg-red-600 text-white py-5 rounded-2xl font-bold text-xl flex items-center justify-center gap-3 hover:bg-red-700 transition-all shadow-xl shadow-red-600/20 active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed mt-4"
                     >
                       {status === "loading" ? (
                         <>
