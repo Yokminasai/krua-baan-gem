@@ -4,6 +4,10 @@ import { Resend } from "resend";
 export async function POST(req: Request) {
   const apiKey = process.env.RESEND_API_KEY;
   
+  // Debug log for environment variables (keys only)
+  console.log("Visible ENV Keys:", Object.keys(process.env).filter(k => k.includes("RESEND") || k.includes("NEXT_PUBLIC")));
+  console.log("RESEND_API_KEY Presence:", !!apiKey);
+
   if (!apiKey) {
     console.error("Missing RESEND_API_KEY in environment variables");
     return NextResponse.json(
