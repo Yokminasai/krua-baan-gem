@@ -9,7 +9,7 @@ export default function ContactSection() {
   const [isLineQrOpen, setIsLineQrOpen] = useState(false);
   const shopPhone = "095-5420726";
   const linemanUrl = "https://www.wongnai.com/delivery/businesses/3591648Kt/order";
-  const googleMapsUrl = "https://www.google.com/maps/place/%E0%B8%84%E0%B8%A3%E0%B8%B1%E0%B8%A7%E0%B8%9B%E0%B8%Bา%E0%B8%99%E0%B9%80%E0%B8%88%E0%B9%87%E0%B8%A1+%E0%B8%AB%E0%B8%A1%E0%B9%88%E0%B8%B2%E0%B8%A5%E0%B9%88%E0%B8%B2%E0%B8%97%E0%B8%B1%E0%B9%88%E0%B8%87%2F%E0%B8%81%E0%B8%A5%E0%B9%83%E0%B8%A7%E0%B8%A2%E0%B8%97%E0%B8%AD%E0%B8%94%E0%B9%82%E0%B8%A1%E0%B9%80%E0%B8%A5%E0%B8%99+-+%E0%B8%8B%E0%B8%AD%E0%B8%A2%E0%B8%82%E0%B8%99%E0%B8%A1%E0%B8%AB%E0%B8%A7%E0%B8%B2%E0%B8%99/@13.6763556,100.3403502,178m";
+  const googleMapsUrl = "https://www.google.com/maps/place/%E0%B8%84%E0%B8%A3%E0%B8%B1%E0%B8%A7%E0%B8%9B%E0%B9%89%E0%B8%B2%E0%B8%99%E0%B9%80%E0%B8%88%E0%B9%87%E0%B8%A1+%E0%B8%AB%E0%B8%A1%E0%B9%88%E0%B8%B2%E0%B8%A5%E0%B9%88%E0%B8%B2%E0%B8%97%E0%B8%B1%E0%B9%88%E0%B8%87%2F%E0%B8%81%E0%B8%A5%E0%B9%89%E0%B8%A7%E0%B8%A2%E0%B8%97%E0%B8%AD%E0%B8%94%E0%B9%82%E0%B8%A1%E0%B9%80%E0%B8%A5%E0%B8%99+-+%E0%B8%8B%E0%B8%AD%E0%B8%A2%E0%B8%82%E0%B8%99%E0%B8%A1%E0%B8%AB%E0%B8%A7%E0%B8%B2%E0%B8%99/@13.6761895,100.3399303,19z/data=!3m1!4b1!4m6!3m5!1s0x30e2bffd2124f9ad:0xc518c905930bd8d6!8m2!3d13.6761882!4d100.340574!16s%2Fg%2F11mspwn5t2?entry=ttu";
 
   return (
     <section id="contact" className="py-24 bg-[#fcf9f5] overflow-hidden">
