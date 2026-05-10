@@ -63,8 +63,8 @@ export default function Philosophy() {
               viewport={{ once: true, amount: 0.1 }}
               className="text-4xl md:text-5xl font-serif text-deep-charcoal mb-8 leading-tight tracking-tight"
             >
-              ไม่ใช่แค่ความอร่อย <br />
-              <span className="text-mala-600 italic font-light">แต่คือความใส่ใจ</span>
+              ปรัชญาความอร่อยจาก <br />
+              <span className="text-mala-600 italic font-light">ครัวบ้านเจ็ม (Krua Baan Gem)</span>
             </motion.h2>
             <motion.p
               initial={{ opacity: 0 }}

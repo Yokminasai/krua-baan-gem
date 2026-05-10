@@ -102,7 +102,7 @@ export default function MenuGrid() {
             viewport={{ once: true, amount: 0.1 }}
             className="max-w-xl"
           >
-            <h2 className="text-4xl md:text-5xl font-serif font-bold text-deep-charcoal mb-4 tracking-tight">Our Curated Menu</h2>
+            <h2 className="text-4xl md:text-5xl font-serif font-bold text-deep-charcoal mb-4 tracking-tight">เมนูแนะนำ ครัวบ้านเจ็ม</h2>
             <p className="text-gray-500 text-lg leading-relaxed font-light">
               รังสรรค์อย่างพิถีพิถันจากวัตถุดิบคุณภาพสู่จานโปรดของคุณ สัมผัสรสชาติอันเป็นเอกลักษณ์ของครัวบ้านเจ็ม
             </p>

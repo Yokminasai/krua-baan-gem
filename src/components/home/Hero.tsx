@@ -46,6 +46,7 @@ export default function Hero() {
             transition={{ delay: 0.2 }}
             className="text-5xl md:text-8xl font-serif font-bold text-white mb-8 leading-tight tracking-tight"
           >
+            <span className="text-3xl md:text-5xl block mb-2 opacity-80">ครัวบ้านเจ็ม</span>
             ศาสตร์แห่งข้อมูล<br />
             <span className="text-[#f59f00]">ศิลป์แห่งรสชาติ</span>
           </motion.h1>

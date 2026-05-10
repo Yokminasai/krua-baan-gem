@@ -12,8 +12,8 @@ export default function StorySection() {
         <div className="max-w-4xl">
           <p className="text-xs md:text-sm tracking-[0.25em] text-gray-400 uppercase mb-8 font-medium">Our Origins</p>
           <h1 className="text-5xl md:text-7xl lg:text-[5.5rem] font-serif font-light text-[#1A1A1A] leading-[1.1] tracking-tight">
-            The Art of <br />
-            <span className="italic text-mala-700">Perfecting</span> Spice.
+            ครัวบ้านเจ็ม <br />
+            <span className="italic text-mala-700 text-4xl md:text-6xl">ศาสตร์แห่งรสชาติที่ปรุงด้วยใจ</span>
           </h1>
         </div>
       </section>

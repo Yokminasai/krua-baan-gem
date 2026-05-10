@@ -87,8 +87,8 @@ export default function MenuPage() {
             >
                 Authentic Flavors
             </motion.span>
-            <h1 className="text-4xl md:text-6xl font-serif font-bold text-deep-charcoal mb-4">Our Menu</h1>
-            <p className="text-gray-400 text-sm md:text-lg max-w-xl font-light">รังสรรค์อย่างพิถีพิถันจากวัตถุดิบคุณภาพสู่จานโปรดของคุณ</p>
+            <h1 className="text-4xl md:text-6xl font-serif font-bold text-deep-charcoal mb-4">เมนู ครัวบ้านเจ็ม</h1>
+            <p className="text-gray-500 text-sm md:text-lg max-w-xl font-light">สัมผัสรสชาติหม่าล่าและอาหารตามสั่งที่รังสรรค์อย่างพิถีพิถันจากวัตถุดิบคุณภาพ</p>
         </div>
       </div>
 
