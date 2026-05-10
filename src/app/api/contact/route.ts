@@ -6,14 +6,10 @@ export const dynamic = "force-dynamic";
 export async function POST(req: Request) {
   const apiKey = process.env.RESEND_API_KEY;
   
-  // Debug log for environment variables (keys only)
-  console.log("Visible ENV Keys:", Object.keys(process.env).filter(k => k.includes("RESEND") || k.includes("NEXT_PUBLIC")));
-  console.log("RESEND_API_KEY Presence:", !!apiKey);
-
   if (!apiKey) {
-    console.error("Missing RESEND_API_KEY in environment variables");
+    console.error("Missing RESEND_API_KEY");
     return NextResponse.json(
-      { error: "ระบบอีเมลยังไม่ได้ตั้งค่า (Missing API Key)" },
+      { error: "ระบบอีเมลยังไม่ได้ตั้งค่า" },
       { status: 500 }
     );
   }
@@ -38,7 +34,7 @@ export async function POST(req: Request) {
     // Send email using Resend
     const data = await resend.emails.send({
       from: "Krua Baan Gem <onboarding@resend.dev>", // Can be changed if domain is verified
-      to: ["patham.sins@proton.me"],
+      to: ["patham.sins@hotmail.com"],
       subject: `[${typeText}] การติดต่อใหม่จากคุณ ${name}`,
       html: `
         <!DOCTYPE html>
@@ -105,18 +101,18 @@ export async function POST(req: Request) {
     });
 
     if (data.error) {
-      console.error("Resend error details:", data.error);
+      console.error("Resend error:", data.error);
       return NextResponse.json(
-        { error: `Resend Error: ${data.error.message || "Unknown error"}` },
+        { error: "ไม่สามารถส่งอีเมลได้ในขณะนี้ กรุณาลองใหม่อีกครั้ง" },
         { status: 500 }
       );
     }
 
     return NextResponse.json({ success: true, id: data.data?.id });
-  } catch (error: any) {
+  } catch (error) {
     console.error("Contact API error:", error);
     return NextResponse.json(
-      { error: `System Error: ${error.message || "Internal error"}` },
+      { error: "เกิดข้อผิดพลาดภายในระบบ" },
       { status: 500 }
     );
   }
