@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 
+export const dynamic = "force-dynamic";
+
 export async function POST(req: Request) {
   const apiKey = process.env.RESEND_API_KEY;
   
@@ -103,18 +105,18 @@ export async function POST(req: Request) {
     });
 
     if (data.error) {
-      console.error("Resend error:", data.error);
+      console.error("Resend error details:", data.error);
       return NextResponse.json(
-        { error: "ไม่สามารถส่งอีเมลได้ในขณะนี้ กรุณาลองใหม่อีกครั้ง" },
+        { error: `Resend Error: ${data.error.message || "Unknown error"}` },
         { status: 500 }
       );
     }
 
     return NextResponse.json({ success: true, id: data.data?.id });
-  } catch (error) {
+  } catch (error: any) {
     console.error("Contact API error:", error);
     return NextResponse.json(
-      { error: "เกิดข้อผิดพลาดภายในระบบ" },
+      { error: `System Error: ${error.message || "Internal error"}` },
       { status: 500 }
     );
   }
