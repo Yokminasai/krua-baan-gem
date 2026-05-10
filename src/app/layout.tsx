@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Prompt, Kanit } from "next/font/google";
 import "./globals.css";
+import ContactSupportModal from "@/components/forms/ContactSupportModal";
 
 const prompt = Prompt({
   variable: "--font-prompt",
@@ -77,7 +78,10 @@ export default function RootLayout({
       lang="th"
       className={`${prompt.variable} ${kanit.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        {children}
+        <ContactSupportModal />
+      </body>
     </html>
   );
 }
