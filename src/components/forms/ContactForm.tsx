@@ -39,16 +39,26 @@ export default function ContactForm() {
         body: JSON.stringify(formData)
       });
 
-      const data = await res.json();
+      // Check if response is JSON
+      const contentType = res.headers.get("content-type");
+      let data;
+      if (contentType && contentType.includes("application/json")) {
+        data = await res.json();
+      } else {
+        const text = await res.text();
+        console.error("Non-JSON response:", text);
+        throw new Error("เซิร์ฟเวอร์ตอบกลับผิดพลาด (โปรดติดต่อแอดมิน)");
+      }
 
       if (!res.ok) {
-        throw new Error(data.error || "เกิดข้อผิดพลาดในการส่งข้อมูล");
+        throw new Error(data?.error || "เกิดข้อผิดพลาดในการส่งข้อมูล");
       }
 
       setStatus("success");
       setFormData({ name: "", contactInfo: "", orderId: "", type: "food", message: "" });
       
     } catch (error: any) {
+      console.error("Submit Error:", error);
       setStatus("error");
       setErrorMessage(error.message || "ไม่สามารถส่งข้อความได้ กรุณาลองใหม่อีกครั้ง");
     }
